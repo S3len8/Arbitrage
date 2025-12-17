@@ -22,7 +22,7 @@ def get_price(symbol: str):
 
 print(get_price("BTCUSDT"))
 
-print(USDT_PRICES)
+print(list(USDT_PRICES))
 
 # print(value_usdt)
 
