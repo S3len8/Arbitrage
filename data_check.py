@@ -27,10 +27,10 @@ def get_price_bybit(t):
     return bybit_price
 
 
-prices = {
-    'Binance': get_price_binance,
-    'Bybit': get_price_bybit,
-}
+# prices = {
+#     'Binance': get_price_binance,
+#     'Bybit': get_price_bybit,
+# }
 
 # Fees for binance, bybit and others cryptocurrency exchange
 # fees = {
@@ -38,5 +38,5 @@ prices = {
 #     'Bybit': '0.01',
 # }
 
-print(prices['Binance']('BTCUSDT'), prices['Bybit']('BTCUSDT'))
+# print(prices['Binance']('BTCUSDT'), prices['Bybit']('BTCUSDT'))
 
