@@ -45,8 +45,16 @@ def calc_spread(binance_bid, bybit_bid, binance_ask, bybit_ask):
 
 
 while True:
-    calc_spread(price_binance_bid, price_bybit_bid, price_binance_ask, price_bybit_ask)
-    print(prices['Binance']('BTCUSDT'), prices['Bybit']('BTCUSDT'))
+    binance_symbol, binance_ask, binance_bid = get_price_binance('BTCUSDT')
+    bybit_symbol, bybit_bid, bybit_ask = get_price_bybit('BTCUSDT')
+
+    calc_spread(binance_bid, bybit_bid, binance_ask, bybit_ask)
+
+    print(
+        f"Binance bid/ask: {binance_bid} / {binance_ask}",
+        f"Bybit bid/ask: {bybit_bid} / {bybit_ask}"
+    )
+
     time.sleep(7)
 
 

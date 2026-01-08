@@ -16,15 +16,16 @@ def get_price_binance(symbol: str):
 r = requests.get(url, params=params).json()
 
 
-def get_price_bybit(t):
-    for t in r["result"]["list"]:
-        if t["symbol"].endswith("USDT") and t["symbol"] == 'BTCUSDT':
-            bybit_price = (
-                t["symbol"],
-                t["bid1Price"],
-                t["ask1Price"]
+def get_price_bybit(symbol: str):
+    r = requests.get(url, params=params, timeout=5).json()
+
+    for item in r["result"]["list"]:
+        if item["symbol"] == symbol:
+            return (
+                item["symbol"],
+                float(item["bid1Price"]),
+                float(item["ask1Price"])
             )
-    return bybit_price
 
 
 
