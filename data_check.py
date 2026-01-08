@@ -13,9 +13,6 @@ def get_price_binance(symbol: str):
     return name['symbol'], float(addbid['askPrice']), float(addbid['bidPrice'])
 
 
-r = requests.get(url, params=params).json()
-
-
 def get_price_bybit(symbol: str):
     r = requests.get(url, params=params, timeout=5).json()
 
