@@ -3,17 +3,25 @@ from binance.client import Client
 
 binance_client = Client()  # для публічних даних API ключі не потрібні
 
-url = "https://api.bybit.com/v5/market/tickers"
-params = {"category": "spot"}
 
+def get_price_binance():
+    data = binance_client.get_orderbook_tickers()
+    result = {}
 
-def get_price_binance(symbol: str):
-    name = binance_client.get_symbol_ticker(symbol=symbol)
-    addbid = binance_client.get_orderbook_tickers(symbol=symbol)
-    return name['symbol'], float(addbid['askPrice']), float(addbid['bidPrice'])
+    for item in data:
+        symbol = item["symbol"]
+        if symbol.endswith("USDT"):
+            result[symbol] = {
+                "bid": float(item["bidPrice"]),
+                "ask": float(item["askPrice"])
+            }
+
+    return result
 
 
 def get_price_bybit(symbol: str):
+    url = "https://api.bybit.com/v5/market/tickers"
+    params = {"category": "spot"}
     r = requests.get(url, params=params, timeout=5).json()
 
     for item in r["result"]["list"]:
@@ -25,5 +33,6 @@ def get_price_bybit(symbol: str):
             )
 
 
+print(get_price_binance())
 
 
