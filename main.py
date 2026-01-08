@@ -4,35 +4,6 @@ from data_check import get_price_binance, get_price_bybit
 
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
 
-# prices = {
-#     'Binance': get_price_binance,
-#     'Bybit': get_price_bybit,
-# }
-#
-# data_binance = list(prices['Binance']('BTCUSDT'))
-# data_bybit = list(prices['Bybit']('BTCUSDT'))
-#
-# price_binance_bid, price_binance_ask = float(data_binance[2]), float(data_binance[1])
-# price_bybit_bid, price_bybit_ask = float(data_bybit[1]), float(data_bybit[2])
-
-
-# def calc_bid(firstCurrency, secondCurrency):
-#     if firstCurrency > secondCurrency:
-#         result = firstCurrency - secondCurrency
-#         return result
-#     if secondCurrency > firstCurrency:
-#         result = secondCurrency - firstCurrency
-#         return result
-#
-#
-# def calc_ask(firstCurrency, secondCurrency):
-#     if firstCurrency > secondCurrency:
-#         result = firstCurrency - secondCurrency
-#         return result
-#     if secondCurrency > firstCurrency:
-#         result = secondCurrency - firstCurrency
-#         return result
-
 
 def calc_spread(symbol, binance, bybit):
     if binance["bid"] > bybit["bid"]:
