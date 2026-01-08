@@ -1,3 +1,5 @@
+import time
+
 from data_check import get_price_binance, get_price_bybit
 
 
@@ -42,9 +44,10 @@ def calc_spread(binance_bid, bybit_bid, binance_ask, bybit_ask):
         return print(f'Spread is {spread:.9%}')
 
 
-
-calc_spread(price_binance_bid, price_bybit_bid, price_binance_ask, price_bybit_ask)
-print(prices['Binance']('BTCUSDT'), prices['Bybit']('BTCUSDT'))
+while True:
+    calc_spread(price_binance_bid, price_bybit_bid, price_binance_ask, price_bybit_ask)
+    print(prices['Binance']('BTCUSDT'), prices['Bybit']('BTCUSDT'))
+    time.sleep(7)
 
 
 
