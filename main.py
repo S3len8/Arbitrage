@@ -16,6 +16,11 @@ def calc_spread(symbol, binance, bybit):
     return side, spread * 100
 
 
+def filter_spread():
+    if spread > 0.02:
+        print(f"Best spread {symbol}")
+
+
 while True:
     binance_data = get_price_binance(SYMBOLS)
     bybit_data = get_price_bybit(SYMBOLS)
@@ -29,6 +34,8 @@ while True:
             binance_data[symbol],
             bybit_data[symbol]
         )
+
+        filter_spread()
 
         print(
             f"{symbol} | {side} | Spread: {spread:.4f}% | "
