@@ -18,7 +18,7 @@ def calc_spread(symbol, binance, bybit):
 
 def filter_spread():
     if spread > 0.02:
-        print(f"Best spread {symbol}")
+        print(f"Best spread is {symbol}")
 
 
 while True:
