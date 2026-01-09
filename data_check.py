@@ -4,6 +4,52 @@ from binance.client import Client
 binance_client = Client()  # для публічних даних API ключі не потрібні
 
 
+def get_binance_spot_symbols():
+    url = "https://api.binance.com/api/v3/exchangeInfo"
+    data = requests.get(url).json()
+
+    symbols = []
+    for s in data["symbols"]:
+        if s["status"] == "TRADING" and s["isSpotTradingAllowed"]:
+            symbols.append({
+                "symbol": s["symbol"],
+                "base": s["baseAsset"],
+                "quote": s["quoteAsset"]
+            })
+    return symbols
+
+
+def get_bybit_spot_symbols():
+    url = "https://api.bybit.com/v5/market/instruments-info"
+    params = {"category": "spot"}
+
+    data = requests.get(url, params=params).json()
+    symbols = []
+
+    for s in data["result"]["list"]:
+        if s["status"] == "Trading":
+            symbols.append({
+                "symbol": s["symbol"],
+                "base": s["baseCoin"],
+                "quote": s["quoteCoin"]
+            })
+    return symbols
+
+
+binance_symbols = get_binance_spot_symbols()
+usdt_pairs = [s for s in binance_symbols if s["quote"] == "USDT"]
+print(len(usdt_pairs))
+print(usdt_pairs[:5])
+bybit_symbols = get_bybit_spot_symbols()
+bybit_usdt = [s for s in bybit_symbols if s["quote"] == "USDT"]
+print(len(bybit_symbols))
+print(bybit_symbols[:5])
+
+
+def comparison_symbols():
+    pass
+
+
 def get_price_binance(symbols: list[str]) -> dict:
     data = binance_client.get_orderbook_tickers()
     result = {}
