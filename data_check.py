@@ -45,6 +45,15 @@ bybit_usdt = [s for s in bybit_symbols if s["quote"] == "USDT"]
 print(len(bybit_symbols))
 print(bybit_symbols[:5])
 
+# for coin in usdt_pairs:
+#     print(coin['symbol'])
+#
+# for coinb in bybit_usdt:
+#     print(coinb['symbol'])
+
+for coin1, coin2 in zip(usdt_pairs, bybit_usdt):
+    if coin1 == coin2:
+        print(f"{coin1} and {coin2}")
 
 def comparison_symbols():
     pass
