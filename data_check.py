@@ -45,29 +45,19 @@ bybit_usdt = [s for s in bybit_symbols if s["quote"] == "USDT"]
 print(len(bybit_usdt))
 print(bybit_usdt[:5])
 
-# dictone = usdt_pairs[0]
-# print(dictone)
 
-for coin in usdt_pairs:
-    print(coin)
-    print(f"{coin['symbol']}")
-# symbols = [q for q in usdt_pairs if q.get('symbol')]
-# print(symbols)
+def comparison_symbols(binance: list, bybit: list) -> list:
+    binance_symbols = {x["symbol"] for x in binance}
+    bybit_symbols = {x["symbol"] for x in bybit}
 
-# for coin in usdt_pairs:
-#     t = coin['symbol']
-#     print(t)
-#
-# for coinb in bybit_usdt:
-#     r = coinb['symbol']
-#
-# for coin1, coin2 in zip(t, r):
-#     if coin1['symbol'] == coin2['symbol']:
-#         print(f"{coin1} and {coin2}")
+    common_symbols = binance_symbols & bybit_symbols
+
+    return [x for x in binance if x["symbol"] in common_symbols]
 
 
-def comparison_symbols():
-    pass
+common = comparison_symbols(usdt_pairs, bybit_usdt)
+print(len(common))
+print(common)
 
 
 def get_price_binance(symbols: list[str]) -> dict:
