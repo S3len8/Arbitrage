@@ -38,21 +38,22 @@ def get_bybit_spot_symbols():
 
 binance_symbols = get_binance_spot_symbols()
 usdt_pairs = [s for s in binance_symbols if s["quote"] == "USDT"]
-print(len(usdt_pairs))
-print(usdt_pairs[:5])
 bybit_symbols = get_bybit_spot_symbols()
 bybit_usdt = [s for s in bybit_symbols if s["quote"] == "USDT"]
-print(len(bybit_usdt))
-print(bybit_usdt[:5])
 
 
 def comparison_symbols(binance: list, bybit: list) -> list:
-    binance_symbols = {x["symbol"] for x in binance}
-    bybit_symbols = {x["symbol"] for x in bybit}
+    binance_symbols = {item["symbol"] for item in binance}
+    bybit_symbols = {item["symbol"] for item in bybit}
 
     common_symbols = binance_symbols & bybit_symbols
 
-    return [x for x in binance if x["symbol"] in common_symbols]
+    result = []
+    for item in binance:
+        if item["symbol"] in common_symbols:
+            result.append(item)
+
+    return result
 
 
 common = comparison_symbols(usdt_pairs, bybit_usdt)
