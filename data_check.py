@@ -42,18 +42,29 @@ print(len(usdt_pairs))
 print(usdt_pairs[:5])
 bybit_symbols = get_bybit_spot_symbols()
 bybit_usdt = [s for s in bybit_symbols if s["quote"] == "USDT"]
-print(len(bybit_symbols))
-print(bybit_symbols[:5])
+print(len(bybit_usdt))
+print(bybit_usdt[:5])
+
+# dictone = usdt_pairs[0]
+# print(dictone)
+
+for coin in usdt_pairs:
+    print(coin)
+    print(f"{coin['symbol']}")
+# symbols = [q for q in usdt_pairs if q.get('symbol')]
+# print(symbols)
 
 # for coin in usdt_pairs:
-#     print(coin['symbol'])
+#     t = coin['symbol']
+#     print(t)
 #
 # for coinb in bybit_usdt:
-#     print(coinb['symbol'])
+#     r = coinb['symbol']
+#
+# for coin1, coin2 in zip(t, r):
+#     if coin1['symbol'] == coin2['symbol']:
+#         print(f"{coin1} and {coin2}")
 
-for coin1, coin2 in zip(usdt_pairs, bybit_usdt):
-    if coin1 == coin2:
-        print(f"{coin1} and {coin2}")
 
 def comparison_symbols():
     pass
