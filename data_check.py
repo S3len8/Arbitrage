@@ -35,3 +35,4 @@ def get_price_bybit(symbols: list[str]) -> dict:
             }
 
     return result
+

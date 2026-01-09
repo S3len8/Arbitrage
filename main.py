@@ -2,7 +2,7 @@ import time
 
 from data_check import get_price_binance, get_price_bybit
 
-SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "DOGEUSDT", "LINKUSDT", "BNBUSDT", "MANAUSDT", "LTCUSDT", "SOLUSDT", "GMTUSDT"]
 
 
 def calc_spread(symbol, binance, bybit):
@@ -17,7 +17,7 @@ def calc_spread(symbol, binance, bybit):
 
 
 def filter_spread():
-    if spread > 0.02:
+    if spread > 0.12:
         print(f"Best spread is {symbol}")
 
 
