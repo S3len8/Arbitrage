@@ -60,9 +60,8 @@ def comparison_symbols(binance: list, bybit: list) -> list:
 common = comparison_symbols(usdt_pairs, bybit_usdt)
 
 
-def get_symbol():
-    for i in range(len(common)):
-        return f"symbol: ", common[i]['symbol']
+def get_symbols() -> list[str]:
+    return [item["symbol"] for item in common]
 
 
 def get_price_binance(symbols: list[str]) -> dict:

@@ -1,9 +1,9 @@
 import time
 
-from data_check import get_price_binance, get_price_bybit, get_symbol
+from data_check import get_price_binance, get_price_bybit, get_symbols
 
 
-SYMBOLS = get_symbol()
+SYMBOLS = get_symbols()
 
 
 def calc_spread(symbol, binance, bybit):
