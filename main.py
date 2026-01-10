@@ -1,8 +1,13 @@
 import time
 
-from data_check import get_price_binance, get_price_bybit
+from data_check import get_price_binance, get_price_bybit, get_symbol
 
-SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "DOGEUSDT", "LINKUSDT", "BNBUSDT", "MANAUSDT", "LTCUSDT", "SOLUSDT", "GMTUSDT"]
+# SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "DOGEUSDT", "LINKUSDT", "BNBUSDT", "MANAUSDT", "LTCUSDT", "SOLUSDT", "GMTUSDT"]
+# print(common)
+# print(type(common))
+# print(type(SYMBOLS))
+
+SYMBOLS = get_symbol()
 
 
 def calc_spread(symbol, binance, bybit):

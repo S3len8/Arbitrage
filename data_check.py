@@ -1,5 +1,6 @@
 import requests
 from binance.client import Client
+import json
 
 binance_client = Client()  # для публічних даних API ключі не потрібні
 
@@ -57,8 +58,17 @@ def comparison_symbols(binance: list, bybit: list) -> list:
 
 
 common = comparison_symbols(usdt_pairs, bybit_usdt)
-print(len(common))
-print(common)
+# dictcommon = dict(common)
+# with open(dictcommon.json, 'w', encoding='utf-8') as f:
+#     json.dump(dictcommon, f)
+# print(type(common))
+# print(len(common))
+# print(common)
+
+
+def get_symbol():
+    for i in range(len(common)):
+        return f"symbol: ", common[i]['symbol']
 
 
 def get_price_binance(symbols: list[str]) -> dict:
