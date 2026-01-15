@@ -22,30 +22,33 @@ def calc_spread(symbol, binance, bybit):
     return side, spread * 100
 
 
-while True:
-    binance_data = get_price_binance(SYMBOLS)
-    bybit_data = get_price_bybit(SYMBOLS)
+try:
+    while True:
+        binance_data = get_price_binance(SYMBOLS)
+        bybit_data = get_price_bybit(SYMBOLS)
 
-    for symbol in SYMBOLS:
-        if symbol not in binance_data or symbol not in bybit_data:
-            continue
+        for symbol in SYMBOLS:
+            if symbol not in binance_data or symbol not in bybit_data:
+                continue
 
-        side, spread = calc_spread(
-            symbol,
-            binance_data[symbol],
-            bybit_data[symbol]
-        )
-
-        if spread > 0.17:
-            print(
-                f"{symbol} | {side} | Spread: {spread:.4f}% | "
-                f"Binance {binance_data[symbol]['bid']} / {binance_data[symbol]['ask']} | "
-                f"Bybit {bybit_data[symbol]['bid']} / {bybit_data[symbol]['ask']}" 
-                f""
-                f"\n ==============================================================="
+            side, spread = calc_spread(
+                symbol,
+                binance_data[symbol],
+                bybit_data[symbol]
             )
 
-    time.sleep(7)
+            if spread > 0.17:
+                print(
+                    f"{symbol} | {side} | Spread: {spread:.4f}% | "
+                    f"Binance {binance_data[symbol]['bid']} / {binance_data[symbol]['ask']} | "
+                    f"Bybit {bybit_data[symbol]['bid']} / {bybit_data[symbol]['ask']}" 
+                    f""
+                    f"\n ==============================================================="
+                )
+
+        time.sleep(7)
+except KeyboardInterrupt as e:
+    print("Program ended!")
 
 
 
