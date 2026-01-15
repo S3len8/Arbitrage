@@ -34,8 +34,8 @@ while True:
         if spread > 0.64:
             print(
                 f"{symbol} | {side} | Spread: {spread:.4f}% | "
-                f"Binance buy: {binance_data[symbol]['bid']} / sell: {binance_data[symbol]['ask']} | "
-                f"Bybit buy: {bybit_data[symbol]['bid']} / sell: {bybit_data[symbol]['ask']}"
+                f"Binance {binance_data[symbol]['bid']} / {binance_data[symbol]['ask']} | "
+                f"Bybit {bybit_data[symbol]['bid']} / {bybit_data[symbol]['ask']}"
                 f"\n ==============================================================="
             )
 
