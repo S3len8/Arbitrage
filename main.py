@@ -5,16 +5,16 @@ from data_check import get_price_binance, get_price_bybit, get_symbols
 
 SYMBOLS = get_symbols()
 fees = {
-    'Binance': '0.1', 'Bybit': '0.1', 'Bitget': '0.1', 'Kucoin': '0.1', 'Mexc': '0.0', 'Gate': '0.1',
+    'Binance': 0.1, 'Bybit': 0.1, 'Bitget': 0.1, 'Kucoin': 0.1, 'Mexc': 0.0, 'Gate': 0.1,
 }
 
 
-def calc_spread(symbol, binance, bybit):
+def calc_spread(symbol, binance, bybit, fees):
     if binance["bid"] > bybit["ask"]:
-        spread = (binance["bid"] - bybit["ask"]) / binance["bid"]
+        spread = ((binance["bid"] - bybit["ask"]) / binance["bid"]) - fees['Binance'] - fees['Bybit']
         side = "BUY Bybit → SELL Binance"
     elif bybit["bid"] > binance["ask"]:
-        spread = (bybit["bid"] - binance["ask"]) / bybit["bid"]
+        spread = (bybit["bid"] - binance["ask"]) / bybit["bid"] - fees['Binance'] - fees['Bybit']
         side = "BUY Binance → SELL Bybit"
     else:
         return None, 0.0
@@ -34,7 +34,8 @@ try:
             side, spread = calc_spread(
                 symbol,
                 binance_data[symbol],
-                bybit_data[symbol]
+                bybit_data[symbol],
+                fees,
             )
 
             if spread > 0.17:
