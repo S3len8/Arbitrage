@@ -34,9 +34,6 @@ def check_pair(ex1_name, ex1, ex2_name, ex2, fees):
     return None, 0.0
 
 
-# ─────────────────────────────────────────────
-# Поиск ЛУЧШЕГО спреда среди всех бирж
-# ─────────────────────────────────────────────
 def calc_spread(symbol, prices: dict, fees):
     best_side = None
     best_spread = 0.0
@@ -60,9 +57,6 @@ def calc_spread(symbol, prices: dict, fees):
     return best_side, best_spread * 100
 
 
-# ─────────────────────────────────────────────
-# MAIN LOOP
-# ─────────────────────────────────────────────
 try:
     while True:
         binance_data = get_price_binance(SYMBOLS)
