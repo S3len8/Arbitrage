@@ -2,6 +2,7 @@ import time
 
 from data_check import get_price_binance, get_price_bybit, get_symbols, get_price_bitget
 
+min_spread = float(input("Spread: "))
 
 SYMBOLS = get_symbols()
 fees = {
@@ -79,7 +80,7 @@ try:
 
             side, spread = calc_spread(symbol, prices, fees)
 
-            if spread > 0.17:
+            if spread > min_spread:
                 print(
                     f"{symbol} | {side} | Spread: {spread:.4f}%\n"
                     f"Binance: {prices['Binance']['bid']} / {prices['Binance']['ask']}\n"
