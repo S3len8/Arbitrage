@@ -58,6 +58,17 @@ def calc_spread(symbol, prices: dict, fees):
     return best_side, best_spread * 100
 
 
+def extract_asset(symbol: str) -> str:
+    """
+    Selects the base coin from the trading pair.
+    Example: BTCUSDT -> BTC, ETHBUSD -> ETH
+    """
+    for quote in ("USDT", "USDC", "BUSD", "FDUSD"):
+        if symbol.endswith(quote):
+            return symbol[:-len(quote)]
+    return symbol
+
+
 try:
     while True:
         binance_data = get_price_binance(SYMBOLS)
@@ -81,7 +92,10 @@ try:
             side, spread = calc_spread(symbol, prices, fees)
 
             if spread > min_spread:
-                nets = NETWORK_CACHE.get(symbol, [])
+                # We get a basic coin for searching networks
+                asset = extract_asset(symbol)
+                # We take nets from the cache for the base coin
+                nets = NETWORK_CACHE.get(asset, [])
 
                 print(
                     f"{symbol} | {side} | Spread: {spread:.4f}%\n"
