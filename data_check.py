@@ -2,12 +2,22 @@ import requests
 from binance.client import Client
 from dataclasses import dataclass
 from typing import Optional
+from collections import defaultdict
 
 
 binance_client = Client(
     api_key='OcirhzEKhIgPDd9wcV0fOTaMMoVBq3mLY8ESmEFZXcZ53doPfPIgsSZMZVz74bSy',
     api_secret='jvYQuPuM26KLvY3M67FlYtAZpCHLTf7Hc3qBhs7Ch5DPx6mxQ7mqDCwZnMywm1Sf'
 )  # для публічних даних API ключі не потрібні
+
+
+def build_cache(networks: list) -> dict:
+    cache = defaultdict(list)
+
+    for key in networks:
+        cache[key.symbol].append(key)
+
+    return cache
 
 
 def get_binance_spot_symbols():
@@ -181,13 +191,14 @@ def get_binance_networks(binance_client) -> list[NetworkInfo]:
     return networks_list
 
 
-networks = get_binance_networks(binance_client)
+NETWORK_CACHE = build_cache(get_binance_networks(binance_client=binance_client))
 
-# Допустим, после фильтрации спреда у тебя остались эти монеты
-filtered_symbols = ["USDT", "BTC"]
 
-for symbol in filtered_symbols:
-    nets = [n for n in networks if n.symbol == symbol]
-    print(f"\nСети для {symbol}:")
-    for n in nets:
-        print(f"{n.network} ({n.network_name}) | withdraw_fee={n.withdraw_fee} | min={n.withdraw_min} | transfer_time={n.transfer_time_sec}s | withdraw={n.withdraw_enabled} | deposit={n.deposit_enabled}")
+# # Допустим, после фильтрации спреда у тебя остались эти монеты
+# filtered_symbols = ["USDT", "BTC"]
+#
+# for symbol in filtered_symbols:
+#     nets = NETWORK_CACHE.get(symbol, [])
+#     print(f"\nСети для {symbol}:")
+#     for n in nets:
+#         print(f"{n.network} ({n.network_name}) | withdraw_fee={n.withdraw_fee} | min={n.withdraw_min} | transfer_time={n.transfer_time_sec}s | withdraw={n.withdraw_enabled} | deposit={n.deposit_enabled}")

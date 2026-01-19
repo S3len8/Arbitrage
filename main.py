@@ -1,6 +1,6 @@
 import time
 
-from data_check import get_price_binance, get_price_bybit, get_symbols, get_price_bitget
+from data_check import get_price_binance, get_price_bybit, get_symbols, get_price_bitget, NETWORK_CACHE
 
 min_spread = float(input("Spread: "))
 
@@ -81,13 +81,29 @@ try:
             side, spread = calc_spread(symbol, prices, fees)
 
             if spread > min_spread:
+                nets = NETWORK_CACHE.get(symbol, [])
+
                 print(
                     f"{symbol} | {side} | Spread: {spread:.4f}%\n"
                     f"Binance: {prices['Binance']['bid']} / {prices['Binance']['ask']}\n"
                     f"Bybit:   {prices['Bybit']['bid']} / {prices['Bybit']['ask']}\n"
                     f"Bitget:  {prices['Bitget']['bid']} / {prices['Bitget']['ask']}\n"
-                    f"{'=' * 60}"
                 )
+
+                if not nets:
+                    print("Error, network not found!")
+                else:
+                    print('Networks: ')
+                    for n in nets:
+                        print(
+                            f"  - {n.network} ({n.network_name}) | "
+                            f"fee={n.withdraw_fee} | "
+                            f"min={n.withdraw_min} | "
+                            f"time={n.transfer_time_sec}s | "
+                            f"withdraw={n.withdraw_enabled} | "
+                            f"deposit={n.deposit_enabled}"
+                        )
+                print(f"{'=' * 60}")
 
         time.sleep(7)
 
