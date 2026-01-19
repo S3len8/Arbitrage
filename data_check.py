@@ -1,8 +1,13 @@
 import requests
 from binance.client import Client
+from dataclasses import dataclass
+from typing import Optional
 
 
-binance_client = Client()  # для публічних даних API ключі не потрібні
+binance_client = Client(
+    api_key='OcirhzEKhIgPDd9wcV0fOTaMMoVBq3mLY8ESmEFZXcZ53doPfPIgsSZMZVz74bSy',
+    api_secret='jvYQuPuM26KLvY3M67FlYtAZpCHLTf7Hc3qBhs7Ch5DPx6mxQ7mqDCwZnMywm1Sf'
+)  # для публічних даних API ключі не потрібні
 
 
 def get_binance_spot_symbols():
@@ -132,3 +137,58 @@ def get_price_bitget(symbols: list[str]) -> dict:
 
     return result
 
+
+# Getting and caching information networks and coins from exchanges
+@dataclass
+class NetworkInfo:
+    exchange: str
+    symbol: str
+    network: str
+    network_name: str
+    withdraw_enabled: bool
+    deposit_enabled: bool
+    withdraw_fee: float
+    withdraw_min: float
+    transfer_time_sec: Optional[int] = None
+
+
+NETWORK_TIME_SEC = {
+    'BTC': 60,
+    'ETH': 20,
+}
+
+
+# Get networks and other need functions from Binance
+def get_binance_networks() -> list[NetworkInfo]:
+    url = "https://api.binance.com/sapi/v1/capital/config/getall"
+    response = requests.get(url)
+    data = response.json()
+
+    networks_list = []
+
+    for coin in data:
+        symbol = coin['coin']
+        for key in coin.get('networkList', []):
+            networks_list.append(NetworkInfo(
+                exchange='binance',
+                symbol=symbol,
+                network=key['network'],
+                network_name=key['name'],
+                withdraw_enabled=key['withdrawEnable'],
+                deposit_enabled=key['depositEnable'],
+                withdraw_fee=float(key['withdrawFee']),
+                withdraw_min=float(key['withdrawMin']),
+                transfer_time_sec=NETWORK_TIME_SEC.get(key['network'])
+            ))
+    return networks_list
+
+networks = get_binance_networks()
+
+# Допустим, после фильтрации спреда у тебя остались эти монеты
+filtered_symbols = ["USDT", "BTC"]
+
+for symbol in filtered_symbols:
+    nets = [n for n in networks if n.symbol == symbol]
+    print(f"\nСети для {symbol}:")
+    for n in nets:
+        print(f"{n.network} ({n.network_name}) | withdraw_fee={n.withdraw_fee} | min={n.withdraw_min} | transfer_time={n.transfer_time_sec}s | withdraw={n.withdraw_enabled} | deposit={n.deposit_enabled}")
