@@ -159,10 +159,8 @@ NETWORK_TIME_SEC = {
 
 
 # Get networks and other need functions from Binance
-def get_binance_networks() -> list[NetworkInfo]:
-    url = "https://api.binance.com/sapi/v1/capital/config/getall"
-    response = requests.get(url)
-    data = response.json()
+def get_binance_networks(binance_client) -> list[NetworkInfo]:
+    data = binance_client.get_all_coins_info()
 
     networks_list = []
 
@@ -182,7 +180,8 @@ def get_binance_networks() -> list[NetworkInfo]:
             ))
     return networks_list
 
-networks = get_binance_networks()
+
+networks = get_binance_networks(binance_client)
 
 # Допустим, после фильтрации спреда у тебя остались эти монеты
 filtered_symbols = ["USDT", "BTC"]
